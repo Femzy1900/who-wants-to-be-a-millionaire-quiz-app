@@ -99,6 +99,72 @@ const quizData = [
         { text: "Africa", correct: true },
       ],
     },
+    {
+        id: 11,
+        question: "When did the website 'Facebook' launch?",
+        answers: [
+          {
+            text: "2004",
+            correct: true,
+          },
+          {
+            text: "2005",
+            correct: false,
+          },
+          {
+            text: "2006",
+            correct: false,
+          },
+          {
+            text: "2007",
+            correct: false,
+          },
+        ],
+      },
+      {
+        id: 12,
+        question: "Who played the character of Harry Potter in the movie series?",
+        answers: [
+          {
+            text: "Johnny Depp",
+            correct: false,
+          },
+          {
+            text: "Leonardo DiCaprio",
+            correct: false,
+          },
+          {
+            text: "Denzel Washington",
+            correct: false,
+          },
+          {
+            text: "Daniel Radcliffe",
+            correct: true,
+          },
+        ],
+        },
+        {
+            id: 13,
+            question: "What is the chemical symbol for gold?",
+            answers: [
+              {
+                text: "Au",
+                correct: true,
+              },
+              {
+                text: "Ag",
+                correct: false,
+              },
+              {
+                text: "Fe",
+                correct: false,
+              },
+              {
+                text: "Cu",
+                correct: false,
+              },
+            ],
+          },
   ];
   
   export default quizData;

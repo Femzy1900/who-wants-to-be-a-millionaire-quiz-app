@@ -1,8 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
+import useSound from "use-sound";
 import './App.css'
 import Trivial from "./components/trivial";
 import quizData from "./data";
 import Timer from "./components/Timer";
+import wait from "../src/sounds/wait.mp3"
+import Start from "./components/Start";
 
 
 function App() {
@@ -10,7 +13,8 @@ function App() {
   const [questionNumber, setQuestionNumber] = useState(1);
   const [timeOut, setTimeOut] = useState(false)
   const [earned, setEarned] = useState("$ 0")
-  
+  const [Wait] = useSound(wait)
+  const [username, setUsername] = useState(null)
 
   const moneyPyramid = useMemo(
     () =>
@@ -38,45 +42,61 @@ function App() {
     questionNumber > 1 &&
       setEarned(moneyPyramid.find((m) => m.id === questionNumber - 1).amount);
   }, [questionNumber, moneyPyramid]);
+
+  function replay() {
+    setTimeOut(!timeOut)
+  }
   return (
     <div className="app">
-        <div className="main">
-          {timeOut ? (
-            <h2 className="endText">You earned: {earned}</h2>
-          ) : (
-          <>
-            <div className="top">
-              <div className="timer">
-                <Timer 
-                  setTimeOut={setTimeOut}
-                  questionNumber={questionNumber}
-                />
+      {!username ? ( <Start setUsername={setUsername}/>
+        ) : (
+        <>
+          <div className="main">
+            {Wait()}
+            {timeOut ? (
+              <>
+                <div className="endText">
+                  <h2 >You earned: {earned}</h2>
+                  <button className="replay" onClick={replay}>Replay</button>
+                </div>
+              </>
+            ) : (
+            <>
+              <div className="top">
+                <h2>Welcome to the Game: <span>{username}</span> </h2>
+                <div className="timer">
+                  <Timer 
+                    setTimeOut={setTimeOut}
+                    questionNumber={questionNumber}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="bottom">
-              <Trivial data={quizData} setTimeOut={setTimeOut} setQuestionNumber={setQuestionNumber}
-              questionNumber={questionNumber}/>
-            </div>
-          </>
-          )}
-        </div>
-        <div className="money">
-          <ul className="moneyList">
-            {moneyPyramid.map((m) => (
-              <li className={
-                questionNumber === m.id 
-                ? "moneyListItem active" 
-                : "moneyListItem"
-                }
-              >
-                <span className="moneyNum">{m.id}</span>
-                <span className="moneyCash">{m.amount}</span>
-                </li>
+              <div className="bottom">
+                <Trivial data={quizData} setTimeOut={setTimeOut} setQuestionNumber={setQuestionNumber}
+                questionNumber={questionNumber}/>
+              </div>
+            </>
+            )}
+          </div>
+          <div className="money">
+            <ul className="moneyList">
+              {moneyPyramid.map((m) => (
+                <li className={
+                  questionNumber === m.id 
+                  ? "moneyListItem active" 
+                  : "moneyListItem"
+                  }
+                >
+                  <span className="moneyNum">{m.id}</span>
+                  <span className="moneyCash">{m.amount}</span>
+                  </li>
 
-            ))}
+              ))}
 
-          </ul>
-        </div>
+            </ul>
+          </div>
+        </>
+        )}
     </div>
   );
 }

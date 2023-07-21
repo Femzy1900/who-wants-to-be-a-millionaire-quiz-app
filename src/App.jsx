@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import './App.css'
 import Trivial from "./components/trivial";
 import quizData from "./data";
+import Timer from "./components/Timer";
 
 
 function App() {
@@ -45,7 +46,12 @@ function App() {
           ) : (
           <>
             <div className="top">
-              <div className="timer">30</div>
+              <div className="timer">
+                <Timer 
+                  setTimeOut={setTimeOut}
+                  questionNumber={questionNumber}
+                />
+              </div>
             </div>
             <div className="bottom">
               <Trivial data={quizData} setTimeOut={setTimeOut} setQuestionNumber={setQuestionNumber}

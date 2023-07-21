@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import useSound from "use-sound";
 
 
 function Trivial({data, setTimeOut, setQuestionNumber, questionNumber}) {
